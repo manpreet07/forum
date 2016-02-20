@@ -1,4 +1,6 @@
 
+# Forum
+
 This application is a web forum that is backed by the postgres database. 
 
 Steps to run the application
