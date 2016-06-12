@@ -10,6 +10,10 @@ import cgi
 from wsgiref.simple_server import make_server
 from wsgiref import util
 
+import flask
+app = flask.Flask(__name__)
+
+
 # HTML template for the forum page
 HTML_WRAP = '''\
 <!DOCTYPE html>
@@ -44,6 +48,7 @@ POST = '''\
 '''
 
 ## Request handler for main page
+@app.route("/")
 def View(env, resp):
     '''View is the 'main page' of the forum.
 
@@ -100,8 +105,12 @@ def Dispatcher(env, resp):
         return ['Not Found: ' + page]
 
 
-# Run this bad server only on localhost!
-httpd = make_server('', 8000, Dispatcher)
-print "Serving HTTP on port 8000..."
-httpd.serve_forever()
+# # Run this bad server only on localhost!
+# httpd = make_server('', 8000, Dispatcher)
+# print "Serving HTTP on port 8000..."
+# httpd.serve_forever()
 
+if __name__ == '__main__':
+    app.secret_key = 'super_secret_key'
+    app.debug = True
+    app.run(host='0.0.0.0', port=5000)
