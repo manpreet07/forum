@@ -26,7 +26,7 @@
 	{% if posts %}
 		{% for post in posts %}
 			<div class="row">
-		    <div class="col-md-12">{{post.content}}<br/><em class="date">{{post.time.strftime('%B-%d-%Y at %I:%M:%S')}}</em></div>
+		    <div class="col-md-12"><p>{{post.content}}</p><br/><p class="date"><em>{{post.time.strftime('%B-%d-%Y at %I:%M:%S')}}</em></p></div>
 		    </div>
 		    <hr>
 		{% endfor %}
