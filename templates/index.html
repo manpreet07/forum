@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Forum</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+  </head>
+  <body>
+  <div class="container">
+  <div class="row">
+  <div class="col-md-12">
+    <h1>Forum</h1>
+    </div>
+    </div>
+    <hr>
+    <div class="row">
+    <div class="col-md-12">
+    <form method=post>
+      <div><textarea id="content" name="content"></textarea></div>
+      <div><button id="go" type="submit">Post message</button></div>
+    </form>
+    </div>
+    </div>
+    <hr>
+    <!-- post content will go here -->
+	{% if posts %}
+		{% for post in posts %}
+			<div class="row">
+		    <div class="col-md-12">{{post.content}}<br/><em class="date">{{post.time.strftime('%B-%d-%Y at %I:%M:%S')}}</em></div>
+		    </div>
+		    <hr>
+		{% endfor %}
+	{% endif %}
+	</div>
+  </body>
+</html>

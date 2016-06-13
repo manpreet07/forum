@@ -1,40 +1,19 @@
-#
-# Database access functions for the web forum.
-# 
 
-import time
-import psycopg2
+from sqlalchemy import Column, DateTime, Integer, String
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+import datetime
 
-import bleach;
+Base = declarative_base()
 
-## Get posts from database.
-def GetAllPosts():
-    '''Get all the posts from the database, sorted with the newest first.
 
-    Returns:
-      A list of dictionaries, where each dictionary has a 'content' key
-      pointing to the post content, and 'time' key pointing to the time
-      it was posted.
-    '''
-    conn = psycopg2.connect("dbname=forum")
-    c = conn.cursor()
-    c.execute('select content, time from posts')
-    records = c.fetchall()
-    posts = [{'content': str(row[1]), 'time': str(row[0])} for row in records]
-    posts.sort(key=lambda row: row['time'], reverse=True)
-    conn.close()
-    return posts
+class Forum(Base):
+    __tablename__ = 'forum'
 
-## Add a post to the database.
-def AddPost(content):
-    '''Add a new post to the database.
+    id = Column(Integer, primary_key=True)
+    content = Column(String(250), nullable=False)
+    time = Column(DateTime, default=datetime.datetime.utcnow)
 
-    Args:
-      content: The text content of the new post.
-    '''
-    conn = psycopg2.connect("dbname=forum")
-    c = conn.cursor()
-    t = time.strftime("%c", time.localtime())
-    c.execute('insert into posts (content, time) values(%s, %s)', (content, t,))
-    conn.commit()
-    conn.close()
+engine = create_engine('sqlite:///forum.db')
+
+Base.metadata.create_all(engine)
