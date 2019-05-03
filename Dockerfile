@@ -1,13 +1,11 @@
 FROM python:3
 
-COPY requirements.txt /opt/app/requirements.txt
+ADD . /forum
 
-WORKDIR /opt/app
+WORKDIR /forum
 
 RUN pip install -r requirements.txt
 
-COPY . /opt/app
+COPY forum.py .
 
-ADD forum.py /
-
-CMD [ "python", "./forum.py" ]
+CMD ["python", "./forum.py"]
